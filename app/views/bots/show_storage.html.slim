@@ -2,10 +2,16 @@
   h1
     = Storage.model_name.human
 
-  table.storage
-    tbody
-      - JSON.parse(@bot.storage.content || '{}').each do |key, value|
-        tr
-          td.key = key
-          td = value
+  - if @storage_table.size > 0
+    table.storage
+      tbody
+        - @storage_table.each do |key, value|
+          tr
+            td.key = key
+            td = value
+  - else
+    .well.well-lg
+      p.text-center
+        = t('.empty')
   br
+  = link_to t('commons.words.back'), @bot

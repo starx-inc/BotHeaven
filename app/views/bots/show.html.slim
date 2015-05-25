@@ -21,8 +21,14 @@
   p
     strong = "#{Bot.human_attribute_name(:current_error)}:"
     = @bot.current_error
-  p
-    strong = link_to Storage.model_name.human, storage_bot_path(@bot)
+  p.modules
+    strong = "#{BotModule.model_name.human}:"
+    - @bot.bot_modules.usable(@bot).each do |bot_module|
+      span.label.label-success
+        = link_to bot_module.name, bot_module, class: 'label label-success'
+  - if @bot.editable?(@current_user)
+    p
+      strong = link_to Storage.model_name.human, storage_bot_path(@bot)
   hr
 
   .editor.js-editor
@@ -32,11 +38,11 @@
       .toolbar-item.pull-right.js-switcher
         .glyphicon.glyphicon-resize-full
 
-  - if @bot.owner?(@current_user) || @bot.permission == Bots::Permissions::FREEDOM_BOT
+  -if @bot.editable?(@current_user)
     = link_to t('commons.words.edit'), edit_bot_path(@bot)
     '|
   = link_to t('commons.words.back'), bots_path
 
 coffee:
   $ ->
-    new BotHeaven.Bots.Editor(false)
+    new BotHeaven.Commons.Editor(false)

@@ -2,9 +2,10 @@ ja:
   product_name: 'ぼっとてんごく'
   activerecord:
     models:
-      bot:     'ボット'
-      user:    'ユーザ'
-      storage: 'ストレージ'
+      bot:        'ボット'
+      bot_module: 'モジュール'
+      user:       'ユーザ'
+      storage:    'ストレージ'
     attributes:
       bot:
         name:          'ボット名'
@@ -14,14 +15,33 @@ ja:
         script:        'スクリプト'
         current_error: '最新のエラー'
         permission:    '権限'
+      bot_module:
+        name:          'モジュール名'
+        description:   '説明'
+        user:          '作者'
+        script:        'スクリプト'
+        permission:    '権限'
   bots:
     index:
       title: 'ボット一覧'
       numbers_of_bot: '%{numbers}件(非公開ボットも含む)'
+    show_storage:
+      empty: 'ストレージは空です'
+    form:
+      add:    '追加'
+      remove: '削除'
+      using_module:  '使用中のモジュール'
+      usable_module: '使用可能なモジュール'
     permissions:
       private_bot: '非公開ボット'
       public_bot:  '公開ボット'
       freedom_bot: '改変可能ボット'
+  bot_modules:
+    index:
+      title: 'モジュール一覧'
+    permissions:
+      private_module: '非公開モジュール'
+      public_module:  '公開モジュール'
   commons:
     sentences:
       create: '%{model}を作成'

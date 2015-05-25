@@ -1,4 +1,4 @@
-class BotHeaven.Bots.Editor
+class BotHeaven.Commons.Editor
   # Elements
   elements:
     navbar:   '.js-navbar'

@@ -29,6 +29,11 @@ html lang="ja"
           a.navbar-brand href=root_path
             = t('product_name')
         #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-left
+            li
+              = link_to t(Bot.model_name.human), bots_path
+            li
+              = link_to t(BotModule.model_name.human), bot_modules_path
           ul.nav.navbar-nav.navbar-right
             - if @current_user
               li
