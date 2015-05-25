@@ -8,7 +8,7 @@
   "env": {
     "BUNDLE_WITHOUT": {
       "description": "bundle install --without <these>",
-      "value": "test:development"
+      "value": "test:development:sqlite3"
     },
     "SLACK_TEAM_ID": {
       "description": "check at https://api.slack.com/methods/auth.test/test",

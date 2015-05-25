@@ -49,9 +49,10 @@ gem 'puma'
 # Environment
 gem 'dotenv-rails'
 
+gem 'sqlite3', group: "sqlite3"
+
 group :production do
   gem 'pg'
-  gem 'sqlite3'
   # gem 'rails_12factor'
 end
 
