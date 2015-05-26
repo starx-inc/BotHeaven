@@ -1,0 +1,42 @@
+{
+  "name": "Bot Heaven",
+  "description": "Bot farm of SLACK.",
+  "keywords": ["Slack"],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:create db:migrate"
+  },
+  "env": {
+    "BUNDLE_WITHOUT": {
+      "description": "bundle install --without <these>",
+      "value": "test:development:sqlite3"
+    },
+    "SLACK_TEAM_ID": {
+      "description": "check at https://api.slack.com/methods/auth.test/test",
+      "value": ""
+    },
+    "SLACK_APP_ID": {
+      "description": "visit https://api.slack.com/applications and input here",
+      "value": ""
+    },
+    "SLACK_APP_SECRET": {
+      "description": "visit https://api.slack.com/applications and input here",
+      "value": ""
+    },
+    "SLACK_BOT_NAME": {
+      "description": "visit https://slack.com/services/new/bot and input here",
+      "value": ""
+    },
+    "SLACK_BOT_TOKEN": {
+      "description": "visit https://slack.com/services/new/bot and input here",
+      "value": ""
+    },
+    "SECRET_KEY_BASE": {
+      "description": "Any encryption key",
+      "generator": "secret"
+    },
+    "RAILS_SERVE_STATIC_FILES": "1"
+  },
+  "addons": [
+    "papertrail"
+  ]
+}
