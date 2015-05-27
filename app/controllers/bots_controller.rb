@@ -1,17 +1,20 @@
 class BotsController < ApplicationController
   before_action :authenticated!, except: [:index, :show]
-  before_action :set_bot, only: [:show, :edit, :update, :destroy]
+  before_action :set_bot, only: [:show, :show_storage, :edit, :update, :destroy]
   before_action :check_permission!, except: [:index, :new, :create]
 
   # GET /bots
-  # GET /bots.json
   def index
     @bots = Bot.all
   end
 
   # GET /bots/1
-  # GET /bots/1.json
   def show
+  end
+
+  # GET /bots/1/storage
+  def show_storage
+    @storage_table = JSON.parse(@bot.storage.content || '{}')
   end
 
   # GET /bots/new
@@ -35,49 +38,37 @@ EOS
   end
 
   # POST /bots
-  # POST /bots.json
   def create
     @bot = Bot.new(bot_params).tap do |bot|
       bot.user = current_user
     end
 
-    respond_to do |format|
-      if @bot.save
-        call_initializer
-        invite_bot
-        format.html { redirect_to @bot, notice: 'Bot was successfully created.' }
-        format.json { render :show, status: :created, location: @bot }
-      else
-        format.html { render :new }
-        format.json { render json: @bot.errors, status: :unprocessable_entity }
-      end
+    if @bot.save
+      @bot.fetch_bot_modules(bot_modules_params)
+      call_initializer
+      invite_bot
+      redirect_to @bot, notice: 'Bot was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /bots/1
-  # PATCH/PUT /bots/1.json
   def update
-    respond_to do |format|
-      if @bot.update(bot_params)
-        call_initializer
-        invite_bot
-        format.html { redirect_to @bot, notice: 'Bot was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bot }
-      else
-        format.html { render :edit }
-        format.json { render json: @bot.errors, status: :unprocessable_entity }
-      end
+    if @bot.update(bot_params)
+      @bot.fetch_bot_modules(bot_modules_params)
+      call_initializer
+      invite_bot
+      redirect_to @bot, notice: 'Bot was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /bots/1
-  # DELETE /bots/1.json
   def destroy
     @bot.destroy
-    respond_to do |format|
-      format.html { redirect_to bots_url, notice: 'Bot was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to bots_url, notice: 'Bot was successfully destroyed.'
   end
 
   private
@@ -100,9 +91,9 @@ EOS
   def check_permission!
     case action_name
       when 'show'
-        redirect_to root_path if @bot.permission == Bots::Permissions::PRIVATE_BOT && !@bot.owner?(current_user)
-      when 'edit','update'
-        redirect_to root_path if @bot.permission != Bots::Permissions::FREEDOM_BOT && !@bot.owner?(current_user)
+        redirect_to root_path unless @bot.readable?(current_user)
+      when 'edit', 'update', 'show_storage'
+        redirect_to root_path unless @bot.editable?(current_user)
       when 'destroy'
         redirect_to root_path unless @bot.owner?(current_user)
       else
@@ -113,5 +104,15 @@ EOS
   # Never trust parameters from the scary internet, only allow the white list through.
   def bot_params
     params.require(:bot).permit(:name, :channel, :default_icon, :permission, :script)
+  end
+
+  # Bot Module Parameters.
+  # @return [Array<Integer>] Array of BotModule ID.
+  def bot_modules_params
+    if params[:bot] and params[:bot][:modules]
+      params[:bot][:modules].map(&:to_i)
+    else
+      []
+    end
   end
 end

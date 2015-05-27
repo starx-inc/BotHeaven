@@ -15,19 +15,18 @@ describe JobDaemons::HTTPRequestJob do
   describe '#execute!' do
     subject do
       job.execute!
+      sleep(1) # Wait to wakeup Thread.
     end
 
     it 'Call Net::HTTP.get' do
       expect(Net::HTTP).to receive(:get).once
       subject
-      sleep(1)
     end
 
     it 'Enqueue Bot Job' do
       allow(Net::HTTP).to receive(:get)
       expect(JobDaemon).to receive(:enqueue).once
       subject
-      sleep(1)
     end
 
     context 'When post' do
@@ -38,7 +37,14 @@ describe JobDaemons::HTTPRequestJob do
       it 'Call Net::HTTP.post_form' do
         expect(Net::HTTP).to receive(:post_form).once
         subject
-        sleep(1)
+      end
+    end
+
+    context 'When raise error' do
+      it 'Enqueue Bot Job' do
+        expect(Net::HTTP).to receive(:get) { raise }
+        expect(JobDaemon).to receive(:enqueue).once
+        subject
       end
     end
   end

@@ -1,0 +1,23 @@
+.editor {
+  border: solid 1px #101010;
+  margin: 0;
+  padding: 0;
+
+  .CodeMirror {
+    margin: 0;
+    padding: 0;
+    height: auto;
+  }
+
+  .toolbar {
+    background-color: #f7f7f7;
+    height: 24px;
+    .toolbar-item {
+      height: 16px;
+      font-size: 16px;
+      color: #101010;
+      margin: 4px 10px;
+      cursor: pointer;
+    }
+  }
+}

@@ -49,6 +49,8 @@ module JobDaemons
       when :post
         Net::HTTP.post_form(uri, @params).body
       end
+    rescue
+      ''
     end
   end
 end

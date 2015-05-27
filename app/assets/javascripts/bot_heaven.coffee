@@ -2,3 +2,4 @@
 
 window.BotHeaven =
   Bots: {}
+  Commons: {}

@@ -17,6 +17,8 @@ class Bot < ActiveRecord::Base
   belongs_to :user,    inverse_of: :bots
   has_one :storage, inverse_of: :bot
   has_many :alarms, inverse_of: :bot
+  has_many :bot_bot_modules, inverse_of: :bot
+  has_many :bot_modules, through: :bot_bot_modules
 
   bind_inum :permission, Bots::Permissions
 
@@ -33,7 +35,7 @@ class Bot < ActiveRecord::Base
   def execute_function(function, arguments: [])
     cxt = V8::Context.new(timeout: SCRIPT_TIMEOUT)
     cxt['api'] = Bots::API.new(self)
-    cxt.eval self.script
+    cxt.eval modules_imported_script
     cxt['bot_function_params'] = arguments
     cxt.eval("#{function}.apply(this, bot_function_params)").to_s
   rescue => e
@@ -41,6 +43,12 @@ class Bot < ActiveRecord::Base
     nil
   ensure
     cxt.dispose unless cxt.nil?
+  end
+
+  # Fetch BotModules from usable modules.
+  # @param [Array<Integer>] bot_module_ids Array of BotModule ID.
+  def fetch_bot_modules(bot_module_ids)
+    self.bot_modules = BotModule.usable(self).where(id: bot_module_ids)
   end
 
   # Get Channel ID.
@@ -56,11 +64,29 @@ class Bot < ActiveRecord::Base
     end
   end
 
-  # Check Owner.
-  # @param [User] user
+  # Check if has permission for edit.
+  # @param [User] user User
+  # @return [Boolean] true if user has permission.
+  def editable?(user)
+    owner?(user) || permission == Bots::Permissions::FREEDOM_BOT
+  end
+
+  # Check if owner.
+  # @param [User] user User
   # @return [Boolean] true if user is owner.
   def owner?(user)
-    self.user == user
+    if user
+      self.user_id == user.id
+    else
+      false
+    end
+  end
+
+  # Check if has permission for read.
+  # @param [User] user User
+  # @return [Boolean] true if user has permission.
+  def readable?(user)
+    owner?(user) || permission != Bots::Permissions::PRIVATE_BOT
   end
 
   # Return Slack Bot ID.
@@ -76,6 +102,15 @@ class Bot < ActiveRecord::Base
   end
 
   private
+  # Get modules imported script.
+  # @return [String] Modules imported script
+  def modules_imported_script
+    Array.new.tap { |scripts|
+      scripts.concat bot_modules.usable(self).map(&:script)
+      scripts.push self.script
+    }.join('')
+  end
+
   # Set channel id.
   def set_channel_id
     self.channel_id = SlackUtils::SingletonClient.instance.find_channel_id(channel)

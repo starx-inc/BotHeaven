@@ -19,6 +19,36 @@
     = f.label :permission
     = f.select :permission, Bots::Permissions.collection, selected: @bot.permission.to_i
   .field
+    - using_modules = @bot.bot_modules.usable(@bot)
+    - using_module_ids= using_modules.pluck(:id)
+    - usable_modules = BotModule.usable(@bot).where.not(id: using_module_ids)
+
+    = f.label BotModule.model_name.human
+    .modules
+      .row.selector
+        .js-selected-values
+          - using_module_ids.each do |module_id|
+            = hidden_field_tag 'bot[modules][]', module_id
+        .col-sm-5.using-modules
+          = t('.using_module')
+          select.form-control.js-using-module multiple=true name="selected_modules"
+            - using_modules.each do |bot_module|
+              option value=bot_module.id
+                = bot_module.name
+        .col-sm-2.actions
+          a.btn.btn-success.js-add-module
+            .glyphicon.glyphicon-chevron-left
+            = t('.add')
+          a.btn.btn-danger.js-remove-module
+            = t('.remove')
+            .glyphicon.glyphicon-chevron-right
+        .col-sm-5.usable-modules
+          = t('.usable_module')
+          select.form-control.js-usable-module multiple=true name="usable_modules"
+            - usable_modules.each do |bot_module|
+              option value=bot_module.id
+                = bot_module.name
+  .field
     = f.label :script
     .editor.js-editor
       = f.text_area :script, class: 'js-textarea'
@@ -30,4 +60,5 @@
 
 coffee:
   $ ->
-    new BotHeaven.Bots.Editor(true)
+    new BotHeaven.Commons.Editor(true)
+    new BotHeaven.Bots.ModuleSelector()
