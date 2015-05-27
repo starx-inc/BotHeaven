@@ -1,4 +1,7 @@
 require 'commons/session_helper'
+require 'coveralls'
+
+Coveralls.wear!
 
 RSpec.configure do |config|
   config.include SessionHelper
