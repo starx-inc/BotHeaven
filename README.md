@@ -7,6 +7,7 @@ Heaven is higher than a cloud.
 
 [![Code Climate](https://codeclimate.com/github/alfa-jpn/BotHeaven/badges/gpa.svg)](https://codeclimate.com/github/alfa-jpn/BotHeaven)
 [![Build Status](https://travis-ci.org/alfa-jpn/BotHeaven.svg?branch=master)](https://travis-ci.org/alfa-jpn/BotHeaven)
+[![Coverage Status](https://coveralls.io/repos/alfa-jpn/BotHeaven/badge.svg)](https://coveralls.io/r/alfa-jpn/BotHeaven)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
