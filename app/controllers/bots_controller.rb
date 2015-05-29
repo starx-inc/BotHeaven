@@ -20,6 +20,7 @@ class BotsController < ApplicationController
   # GET /bots/new
   def new
     @bot = Bot.new.tap do |bot|
+      bot.user = current_user
       bot.script = <<'EOS'
 function initialize() {
 }

@@ -49,6 +49,18 @@ RSpec.describe BotModule, type: :model do
     end
   end
 
+  describe '#destroy' do
+    subject do
+      bot_module.destroy!
+    end
+
+    it 'destroy related BotModule.' do
+      expect {
+        subject
+      }.to change(BotBotModule, :count).by (-bot_module.bot_bot_modules.count)
+    end
+  end
+
   describe '.belongings' do
     subject do
       BotModule.belongings(user)
