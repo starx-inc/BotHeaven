@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150525154743) do
+ActiveRecord::Schema.define(version: 20150529165120) do
 
   create_table "alarms", force: :cascade do |t|
     t.string   "name",              limit: 32
     t.string   "callback_function", limit: 128
-    t.integer  "minutes"
+    t.float    "minutes"
     t.boolean  "repeat"
     t.datetime "wake_at"
     t.integer  "bot_id"

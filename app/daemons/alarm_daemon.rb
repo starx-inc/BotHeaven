@@ -6,7 +6,7 @@ class AlarmDaemon
 
   # Start RTM Client.
   def start
-    EM.add_periodic_timer(30) do
+    EM.add_periodic_timer(15) do
       begin
         Alarm.check!
       rescue => e
