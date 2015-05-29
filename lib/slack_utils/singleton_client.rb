@@ -28,11 +28,7 @@ module SlackUtils
     # @return [String, nil] ID of channel, Return nil when channel is not found.
     def find_channel_id(channel_name)
       channel = channels.find {|c| c['name'] == channel_name}
-      if channel
-        channel['id']
-      else
-        nil
-      end
+      channel ? channel['id'] : nil
     end
 
     # Find Channel Name.
@@ -40,11 +36,7 @@ module SlackUtils
     # @return [String, nil] Name of channel, Return nil when channel is not found.
     def find_channel_name(channel_id)
       channel = resource(SlackUtils::Resources::CHANNEL, channel_id)
-      if channel
-        channel['name']
-      else
-        nil
-      end
+      channel ? channel['name'] : nil
     end
 
     # Find User ID from name.
@@ -53,11 +45,7 @@ module SlackUtils
     # @return [String, nil] ID of user, Return nil when user is not found.
     def find_user_id(user_name)
       user = users.find {|u| u['name'] == user_name}
-      if user
-        user['id']
-      else
-        nil
-      end
+      user ? user['id'] : nil
     end
 
     # Find User Name.
@@ -65,11 +53,7 @@ module SlackUtils
     # @return [String, nil] Name of user, Return nil when user is not found.
     def find_user_name(user_id)
       user = resource(SlackUtils::Resources::USER, user_id)
-      if user
-        user['name']
-      else
-        nil
-      end
+      user ? user['name'] : nil
     end
 
     # Join channel.
@@ -111,37 +95,25 @@ module SlackUtils
       type = resource_type.to_s.underscore
       Rails.cache.fetch("SingletonClient-#{type}-#{id}", expires_in: 15.minutes) do
         result = client.send("#{type.pluralize}_info", {type.to_sym => id})
-        if result['ok']
-          result[type]
-        else
-          nil
-        end
+        result['ok'] ? result[type] : nil
       end
     end
 
     # Get all channels.
     # @return [Array<Hash>] channel list.
     def channels
-      Rails.cache.fetch("SingletonClient-Channels", expires_in: 30) do
+      Rails.cache.fetch("SingletonClient-Channels", expires_in: 1.minutes) do
         result = client.channels_list
-        if result['ok']
-          result['channels']
-        else
-          []
-        end
+        result['ok'] ? result['channels'] : []
       end
     end
 
     # Get all users.
     # @return [Array<Hash>] user list.
     def users
-      Rails.cache.fetch("SingletonClient-Users", expires_in: 30) do
+      Rails.cache.fetch("SingletonClient-Users", expires_in: 1.minutes) do
         result = client.users_list
-        if result['ok']
-          result['members']
-        else
-          []
-        end
+        result['ok'] ? result['members'] : []
       end
     end
 

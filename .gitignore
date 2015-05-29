@@ -32,3 +32,6 @@ vendor/bundle
 
 # rbenv
 .ruby-version
+
+# coverails
+coverage/

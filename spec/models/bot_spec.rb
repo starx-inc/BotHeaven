@@ -5,6 +5,8 @@ RSpec.describe Bot, type: :model do
   fixtures :bot_modules
   fixtures :bot_bot_modules
   fixtures :users
+  fixtures :storages
+  fixtures :alarms
 
   let :bot do
     Bot.find(1).tap do |bot|
@@ -162,6 +164,30 @@ RSpec.describe Bot, type: :model do
         subject
         expect(bot.current_error).to include('Timed Out')
       end
+    end
+  end
+
+  describe '#destroy' do
+    subject do
+      bot.destroy!
+    end
+
+    it 'destroy related Alarm' do
+      expect {
+        subject
+      }.to change(Alarm, :count).by (-bot.alarms.size)
+    end
+
+    it 'destroy related BotModule.' do
+      expect {
+        subject
+      }.to change(BotBotModule, :count).by (-bot.bot_bot_modules.count)
+    end
+
+    it 'destroy related Storage.' do
+      expect {
+        subject
+      }.to change(Storage, :count).by (-1)
     end
   end
 
