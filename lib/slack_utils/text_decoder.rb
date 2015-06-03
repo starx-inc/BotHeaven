@@ -6,14 +6,12 @@ module SlackUtils
     # @return [String] decoded text.
     def self.decode(text)
       decoded_text = text.gsub(/<[^>]+>/) do |slack_escaped_string|
-        identifier = slack_escaped_string.slice(1, 1)
-        content = slack_escaped_string.slice(2, slack_escaped_string.length - 3)
-
-        case identifier
+        content = slack_escaped_string.slice(1, slack_escaped_string.length - 2)
+        case content[0]
         when '@'
-          SlackUtils::SingletonClient.instance.find_user_name(content)
+          SlackUtils::SingletonClient.instance.find_user_name(content[1..-1])
         when '#'
-          SlackUtils::SingletonClient.instance.find_user_name(content)
+          SlackUtils::SingletonClient.instance.find_channel_name(content[1..-1])
         else
           content
         end
