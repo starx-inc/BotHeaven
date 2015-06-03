@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :bots do
     member do
       get :storage, to: 'bots#show_storage'
+      get :hook, to: 'bots#hook'
+      post :hook, to: 'bots#hook'
     end
   end
 

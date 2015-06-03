@@ -64,9 +64,9 @@ module SlackUtils
     end
 
     # Invite channel.
-    # @param [String] channel_id ID of channel.
-    # @param [String] user_id    ID of user.
-    # @param [String] token      Token of inviter.
+    # @param [String] channel_id    ID of channel.
+    # @param [String] user_id       ID of user.
+    # @param [String] inviter_token Token of inviter.
     def invite_channel(channel_id, user_id, inviter_token)
       Net::HTTP.post_form(URI.parse('https://slack.com/api/channels.invite'), {channel: channel_id, user: user_id, token: inviter_token})
     end

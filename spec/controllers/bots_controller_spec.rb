@@ -100,6 +100,38 @@ RSpec.describe BotsController, type: :controller do
     end
   end
 
+  describe "GET #hook" do
+    subject do
+      get :hook, id: bot.to_param
+      response
+    end
+
+    it 'Status 200' do
+      expect(subject.status).to eq(200)
+    end
+
+    it 'Enqueue bot job' do
+      expect(JobDaemon).to receive(:enqueue).once
+      subject
+    end
+  end
+
+  describe "POST #hook" do
+    subject do
+      post :hook, id: bot.to_param
+      response
+    end
+
+    it 'Status 200' do
+      expect(subject.status).to eq(200)
+    end
+
+    it 'Enqueue bot job' do
+      expect(JobDaemon).to receive(:enqueue).once
+      subject
+    end
+  end
+
   describe "GET #edit" do
     subject do
       get :edit, id: bot.to_param

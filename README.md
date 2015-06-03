@@ -186,5 +186,23 @@ api.storage.keys()
 api.storage.clear()
 ```
 
+## Bot Webhook
+ A bot can hook a request of `http://{yourhost}/bots/{bot_id}/hook`.
+
+### Example
+Code
+```javascript
+function onHook(method, params) {
+  slack.api.talk(params['message'])
+}
+```
+
+Request
+```
+GET /bots/1/hook?message=hello!
+```
+
+In this case, A Bot will say `hello!`.
+
 ## Licence
 This project is released under the MIT license.

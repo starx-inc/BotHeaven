@@ -1,7 +1,7 @@
 class BotsController < ApplicationController
-  before_action :authenticated!, except: [:index, :show]
+  before_action :authenticated!, except: [:index, :show, :hook]
   before_action :set_bot, only: [:show, :show_storage, :edit, :update, :destroy]
-  before_action :check_permission!, except: [:index, :new, :create]
+  before_action :check_permission!, except: [:index, :hook, :new, :create]
 
   # GET /bots
   def index
@@ -15,6 +15,17 @@ class BotsController < ApplicationController
   # GET /bots/1/storage
   def show_storage
     @storage_table = JSON.parse(@bot.storage.content || '{}')
+  end
+
+  # GET  /bots/1/hook
+  # POST /bots/1/hook
+  def hook
+    if Bot.exists?(params[:id])
+      JobDaemon.enqueue(JobDaemons::BotJob.new(params[:id].to_i, 'onHook', [request.method, hook_params]))
+      render json: {status: 'ok'}, status: :ok
+    else
+      render json: {status: 'ng'}, status: :not_found
+    end
   end
 
   # GET /bots/new
@@ -115,5 +126,11 @@ EOS
     else
       []
     end
+  end
+
+  # Hook Parameters.
+  # @return [Hash<String,String>] Hash of Bot Hook.
+  def hook_params
+    params.except(:id, :action, :controller).each_with_object({}){|(k,v),p| p[k] = v.to_s}
   end
 end
