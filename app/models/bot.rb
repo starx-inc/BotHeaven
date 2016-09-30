@@ -33,6 +33,7 @@ class Bot < ActiveRecord::Base
   # @param [Array]  arguments.
   # @return [String] eval of function.
   def execute_function(function, arguments: [])
+    GC.disable
     cxt = V8::Context.new(timeout: SCRIPT_TIMEOUT)
     cxt['api'] = Bots::API.new(self)
     cxt.eval modules_imported_script
@@ -43,6 +44,7 @@ class Bot < ActiveRecord::Base
     nil
   ensure
     cxt.dispose unless cxt.nil?
+    GC.enable
   end
 
   # Fetch BotModules from usable modules.
