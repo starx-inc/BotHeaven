@@ -9,9 +9,20 @@ module Bots::Apis
 
     # Talk
     # @param [String] message message.
+    # @param [Hash] options options.
     # @return [Boolean] true if success.
-    def talk(message)
-      talk_with_icon(message, @bot.default_icon)
+    def talk(message, options = {})
+      JobDaemon.enqueue(
+        JobDaemons::SlackTalkJob.new(
+          @bot.channel_id.to_s,
+          options['name'] || @bot.name.to_s,
+          options['icon'] || @bot.default_icon.to_s,
+          message.to_s
+        )
+      )
+      true
+    rescue
+      false
     end
 
     # Talk with icon
@@ -19,8 +30,7 @@ module Bots::Apis
     # @param [String] icon_emoji emoji icon.
     # @return [Boolean] true if success.
     def talk_with_icon(message, icon_emoji)
-      JobDaemon.enqueue(JobDaemons::SlackTalkJob.new(@bot.channel_id.to_s, @bot.name.to_s, icon_emoji.to_s, message.to_s))
-      true
+      talk(message, {icon: icon_emoji})
     rescue
       false
     end

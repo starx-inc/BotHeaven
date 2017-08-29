@@ -20,21 +20,38 @@ RSpec.describe Bots::Apis::Slack do
   end
 
   describe '#talk' do
-    let :script do
-      'function test() { return api.slack.talk("hey!"); }'
+    context 'no option' do
+      let :script do
+        'function test() { return api.slack.talk("hey!"); }'
+      end
+
+      it 'Enqueue SlackTalkJob.' do
+        expect(JobDaemon).to receive(:enqueue).once
+        subject
+      end
+
+      it 'Return true' do
+        expect(subject).to eq(true.to_s)
+      end
     end
 
-    it 'Enqueue SlackTalkJob.' do
-      expect(JobDaemon).to receive(:enqueue).once
-      subject
-    end
+    context 'has option' do
+      let :script do
+        'function test() { return api.slack.talk("options!", { name: "slack_bot", icon: "+1"}); }'
+      end
 
-    it 'Return true' do
-      expect(subject).to eq(true.to_s)
+      it 'Enqueue SlackTalkJob.' do
+        expect(JobDaemon).to receive(:enqueue).once
+        subject
+      end
+
+      it 'Return true' do
+        expect(subject).to eq(true.to_s)
+      end
     end
   end
 
-  describe '#talk' do
+  describe '#talk_with_icon' do
     let :script do
       'function test() { return api.slack.talk_with_icon("year!", "hoge"); }'
     end
