@@ -38,5 +38,11 @@ module Bots
     def storage
       @storage ||= Bots::Apis::Storage.new(@bot)
     end
+
+    # Get Setting API.
+    # @return [Bots::Apis::Setting] setting api.
+    def setting
+      @setting ||= Bots::Apis::Setting.new(@bot)
+    end
   end
 end
