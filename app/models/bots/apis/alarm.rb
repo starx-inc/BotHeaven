@@ -13,13 +13,16 @@ module Bots::Apis
     # @param [Float]   minutes    Minutes.(x >= 0.25)
     # @param [Boolean] repeat     Enabled repeat.
     # @return [Boolean] true if success.
-    def regist(alarm_name, callback, minutes, repeat)
+    def register(alarm_name, callback, minutes, repeat)
       minutes = (minutes < 0.25) ? 0.25 : minutes.to_f
       ::Alarm.set!(alarm_name.to_s, @bot, callback.to_s, minutes, repeat == true)
       true
     rescue
       false
     end
+
+    # compatible with old versions
+    alias_method :regist, :register
 
     # Remove alarm.
     # @param [String] alarm_name Name of alarm.
