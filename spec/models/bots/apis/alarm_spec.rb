@@ -20,9 +20,9 @@ RSpec.describe Bots::Apis::Alarm do
     bot.execute_function('test')
   end
 
-  describe '#regist' do
+  describe '#register' do
     let :script do
-      'function test() { return api.alarm.regist("hoge", "callbackfunc", ' + minutes.to_s + ', false); }'
+      'function test() { return api.alarm.register("hoge", "callbackfunc", ' + minutes.to_s + ', false); }'
     end
 
     let :minutes do
@@ -48,6 +48,16 @@ RSpec.describe Bots::Apis::Alarm do
         subject
         expect(Alarm.last.minutes).to eq(0.25)
       end
+    end
+  end
+
+  describe '#regist' do
+    let :script do
+      'function test() { return api.alarm.regist("hoge", "callbackfunc", 1, false); }'
+    end
+
+    it 'Return true' do
+      expect(subject).to eq(true.to_s)
     end
   end
 

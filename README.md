@@ -58,7 +58,7 @@ bundle exec rails s -e production
 ## Bot API
 ### Alarm API
 
-> regist
+> register
 
 ```javascript
 // Set alarm.
@@ -66,10 +66,10 @@ bundle exec rails s -e production
 // @param [String]  callback   Name of callback.
 // @param [Integer] minutes    Minutes.
 // @param [Boolean] repeat     Enabled repeat.
-api.alarm.regist(alarm_name, callback, minutes, repeat)
+api.alarm.register(alarm_name, callback, minutes, repeat)
 
 // Example
-api.alarm.regist("name", "onAlarm", 1, false)
+api.alarm.register("name", "onAlarm", 1, false)
 ```
 
 > remove
