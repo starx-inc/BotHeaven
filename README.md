@@ -130,10 +130,15 @@ api.http.post("http://www.google.co.jp/", {}, "onReceive");
 ```javascript
 // Talk
 // @param [String] message Message
-api.slack.talk(message)
+// @param [Hash] options Message
+api.slack.talk(message, options = {})
 
 // Example
 api.slack.talk("Hello!")
+api.slack.talk("with options", {
+  name: 'my_bot',
+  icon: ':my_icon:'
+})
 ```
 
 > Talk with icon
@@ -184,6 +189,31 @@ api.storage.keys()
 ```javascript
 // Example
 api.storage.clear()
+```
+
+### Setting API
+> Get bot name
+
+```javascript
+api.setting.name
+```
+
+> Get bot default icon
+
+```javascript
+api.setting.icon
+```
+
+> Get joined channel
+
+```javascript
+api.setting.channel
+```
+
+> Get creator name
+
+```javascript
+api.setting.user
 ```
 
 ## Bot Webhook
