@@ -28,6 +28,9 @@ SLACK_BOT_NAME=[your bot name]
 SLACK_BOT_TOKEN=[your bot token]
 SECRET_KEY_BASE=[any string]
 RAILS_SERVE_STATIC_FILES=1 # If you use heroku.
+
+BOT_SCRIPT_TIMEOUT=1000 # optional
+BOT_STORAGE_MAXIMUM_SIZE=102400 # optional
 ```
 
 - Slack Team ID

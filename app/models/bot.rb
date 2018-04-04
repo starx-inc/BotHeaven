@@ -9,7 +9,7 @@
 # @attr [String]            current_error Current Error of bot. When bot does not have error, This value is Empty.
 # @attr [Bots::Permissions] permission    Permission of bot.
 class Bot < ApplicationRecord
-  SCRIPT_TIMEOUT = 1000
+  SCRIPT_TIMEOUT = (ENV['BOT_SCRIPT_TIMEOUT'] || 1000).to_i
 
   after_create :create_default_storage
   before_save :set_channel_id
