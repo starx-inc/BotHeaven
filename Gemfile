@@ -1,19 +1,19 @@
 source 'https://rubygems.org'
 
 # Rails Application
-gem 'rails', '4.2.10'
+gem 'rails', '5.0.7'
 
 # Slim Template Engine.
-gem 'slim-rails', '~> 3.0.1'
+gem 'slim-rails'
 
 # SCSS
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 
 # Uglifier
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 
 # CoffeeScript
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 
 # jquery-ujs
 gem 'jquery-rails'
@@ -25,7 +25,7 @@ gem 'rails-i18n'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 
 # V8
 gem 'therubyracer', platforms: :ruby
@@ -57,7 +57,7 @@ group :production do
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
   gem 'yard'
 end
 
@@ -69,11 +69,12 @@ group :development, :test do
   gem 'spring'
 
   # Test engine
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails'
 
   gem 'coveralls'
 end
 
 group :test do
-  gem 'shoulda-matchers', '~> 2.8.0'
+  gem 'shoulda-matchers', require: false
+  gem 'rails-controller-testing'
 end

@@ -24,8 +24,7 @@ class BotModule < ActiveRecord::Base
     where(permission: BotModules::Permissions::PUBLIC_MODULE.to_i)
   }
   scope :usable, -> (bot) {
-    base_scope = BotModule.belongings(bot.user_id).public_modules
-    where(base_scope.where_values.reduce(:or)).tap {|s| s.bind_values += base_scope.bind_values}
+    belongings(bot.user_id).or(public_modules)
   }
 
   # Check if owner.
