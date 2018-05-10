@@ -17,7 +17,7 @@
     = f.text_field :default_icon
   .field
     = f.label :permission
-    = f.select :permission, Bots::Permissions.collection, selected: @bot.permission.to_i
+    = f.select :permission, Bots::Permissions.form_items, selected: @bot.permission.to_i
   .field
     - using_modules = @bot.bot_modules.usable(@bot)
     - using_module_ids= using_modules.pluck(:id)

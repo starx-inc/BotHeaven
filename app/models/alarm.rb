@@ -6,7 +6,7 @@
 # @attr [DateTime]  wake_at           Alarm wake at.
 # @attr [Boolean]   repeat            if Repeat schedule.
 # @attr [Bot]       bot               Owner Bot of alarm.
-class Alarm < ActiveRecord::Base
+class Alarm < ApplicationRecord
   belongs_to :bot, inverse_of: :alarms
 
   before_save :update_wake_at

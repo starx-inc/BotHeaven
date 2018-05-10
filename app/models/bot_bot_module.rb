@@ -1,5 +1,5 @@
 # Intermediate table
-class BotBotModule < ActiveRecord::Base
+class BotBotModule < ApplicationRecord
   belongs_to :bot, inverse_of: :bot_bot_modules
   belongs_to :bot_module, inverse_of: :bot_bot_modules
 

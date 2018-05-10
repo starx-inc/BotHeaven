@@ -8,7 +8,7 @@
 # @attr [String]            script        Script of bot.
 # @attr [String]            current_error Current Error of bot. When bot does not have error, This value is Empty.
 # @attr [Bots::Permissions] permission    Permission of bot.
-class Bot < ActiveRecord::Base
+class Bot < ApplicationRecord
   SCRIPT_TIMEOUT = 1000
 
   after_create :create_default_storage

@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module BotsHeaven
   class Application < Rails::Application
     # Optional auto load path
-    config.autoload_paths << Rails.root.join('lib')
+    config.paths.add 'lib', eager_load: true
 
     # TimeZone and Locale Setting.
     config.time_zone = 'Tokyo'

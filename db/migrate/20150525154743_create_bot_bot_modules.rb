@@ -1,4 +1,4 @@
-class CreateBotBotModules < ActiveRecord::Migration
+class CreateBotBotModules < ActiveRecord::Migration[4.2]
   def change
     create_table :bot_bot_modules do |t|
       t.references :bot, index: true

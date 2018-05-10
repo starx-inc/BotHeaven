@@ -4,7 +4,7 @@
 # @attr [String]                   script      Script of Module.
 # @attr [User]                     user        Author of Module.
 # @attr [BotModules::Permissions]  permission  Permission of Module.
-class BotModule < ActiveRecord::Base
+class BotModule < ApplicationRecord
   belongs_to :user, inverse_of: :bot_modules
   has_many :bot_bot_modules, inverse_of: :bot_module, dependent: :destroy
   has_many :bots, through: :bot_bot_modules
