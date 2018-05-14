@@ -3,7 +3,7 @@
 # @attr [String]  uid           UserID of Slack.
 # @attr [String]  name          Name of user.
 # @attr [String]  image_url     Image URL of user.
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :bots, inverse_of: :user
   has_many :bot_modules, inverse_of: :user
 

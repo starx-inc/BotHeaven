@@ -4,7 +4,7 @@
 # @attr [String]                   script      Script of Module.
 # @attr [User]                     user        Author of Module.
 # @attr [BotModules::Permissions]  permission  Permission of Module.
-class BotModule < ActiveRecord::Base
+class BotModule < ApplicationRecord
   belongs_to :user, inverse_of: :bot_modules
   has_many :bot_bot_modules, inverse_of: :bot_module, dependent: :destroy
   has_many :bots, through: :bot_bot_modules
@@ -24,8 +24,7 @@ class BotModule < ActiveRecord::Base
     where(permission: BotModules::Permissions::PUBLIC_MODULE.to_i)
   }
   scope :usable, -> (bot) {
-    base_scope = BotModule.belongings(bot.user_id).public_modules
-    where(base_scope.where_values.reduce(:or)).tap {|s| s.bind_values += base_scope.bind_values}
+    belongings(bot.user_id).or(public_modules)
   }
 
   # Check if owner.

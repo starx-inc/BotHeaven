@@ -1,6 +1,6 @@
 # Storage of bot.
 # @attr [String] content
-class Storage < ActiveRecord::Base
+class Storage < ApplicationRecord
   belongs_to :bot, inverse_of: :storage
 
   validates :bot,     presence: true

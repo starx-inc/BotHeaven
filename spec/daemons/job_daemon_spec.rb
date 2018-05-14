@@ -28,9 +28,7 @@ describe JobDaemon do
       end
 
       it 'Raise Error.' do
-        expect {
-          subject
-        }.to raise_error
+        expect { subject }.to raise_error(ArgumentError)
       end
     end
   end

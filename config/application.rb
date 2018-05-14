@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -9,14 +9,11 @@ Bundler.require(*Rails.groups)
 module BotsHeaven
   class Application < Rails::Application
     # Optional auto load path
-    config.autoload_paths << Rails.root.join('lib')
+    config.paths.add 'lib', eager_load: true
 
     # TimeZone and Locale Setting.
     config.time_zone = 'Tokyo'
     config.i18n.default_locale = :ja
-
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
 
     config.generators do |g|
       # Use Slim for template engine.

@@ -56,7 +56,7 @@ RSpec.describe BotModulesController, type: :controller do
 
   describe "GET #show" do
     subject do
-      get :show, id: bot_module.to_param
+      get :show, params: {id: bot_module.to_param}
       response
     end
 
@@ -77,7 +77,7 @@ RSpec.describe BotModulesController, type: :controller do
 
   describe "GET #edit" do
     subject do
-      get :edit, id: bot_module.to_param
+      get :edit, params: {id: bot_module.to_param}
       response
     end
 
@@ -100,7 +100,7 @@ RSpec.describe BotModulesController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       subject do
-        post :create, {:bot_module => valid_attributes}
+        post :create, params: {bot_module: valid_attributes}
       end
 
       it "creates a new Module" do
@@ -123,7 +123,7 @@ RSpec.describe BotModulesController, type: :controller do
 
     context "with invalid params" do
       subject do
-        post :create, {:bot_module => invalid_attributes}
+        post :create, params: {bot_module: invalid_attributes}
       end
 
       it "assigns a newly created but unsaved bot_module as @bot_module" do
@@ -149,7 +149,7 @@ RSpec.describe BotModulesController, type: :controller do
       end
 
       subject do
-        put :update, {:id => bot_module.to_param, :bot_module => new_attributes}
+        put :update, params: {id: bot_module.to_param, bot_module: new_attributes}
       end
 
       it "updates the requested bot_module" do
@@ -183,13 +183,13 @@ RSpec.describe BotModulesController, type: :controller do
     context "with invalid params" do
       it "assigns the bot_module as @bot_module" do
         bot_module = BotModule.create! valid_attributes
-        put :update, {:id => bot_module.to_param, :bot_module => invalid_attributes}
+        put :update, params: {id: bot_module.to_param, bot_module: invalid_attributes}
         expect(assigns(:bot_module)).to eq(bot_module)
       end
 
       it "re-renders the 'edit' template" do
         bot_module = BotModule.create! valid_attributes
-        put :update, {:id => bot_module.to_param, :bot_module => invalid_attributes}
+        put :update, params: {id: bot_module.to_param, bot_module: invalid_attributes}
         expect(response).to render_template("edit")
       end
     end
@@ -199,13 +199,13 @@ RSpec.describe BotModulesController, type: :controller do
     it "destroys the requested bot_module" do
       bot_module = BotModule.create! valid_attributes
       expect {
-        delete :destroy, {:id => bot_module.to_param}
+        delete :destroy, params: {id: bot_module.to_param}
       }.to change(BotModule, :count).by(-1)
     end
 
     it "redirects to the bot_modules list" do
       bot_module = BotModule.create! valid_attributes
-      delete :destroy, {:id => bot_module.to_param}
+      delete :destroy, params: {id: bot_module.to_param}
       expect(response).to redirect_to(bot_modules_url)
     end
 
@@ -215,7 +215,7 @@ RSpec.describe BotModulesController, type: :controller do
       end
 
       it 'Redirect to root' do
-        expect(delete :destroy, {:id => bot_module.to_param}).to redirect_to(root_path)
+        expect(delete :destroy, params: {id: bot_module.to_param}).to redirect_to(root_path)
       end
     end
   end

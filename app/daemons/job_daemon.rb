@@ -20,7 +20,7 @@ class JobDaemon
   # Enqueue job.
   # @param [JobDaemons::JobBase] job Job.
   def self.enqueue(job)
-    raise 'Job should be inherited class of JobDaemons::JobBase' unless job.kind_of?(JobDaemons::JobBase)
+    raise ArgumentError, 'Job should be inherited class of JobDaemons::JobBase' unless job.kind_of?(JobDaemons::JobBase)
     @@queues.enq job
   end
 

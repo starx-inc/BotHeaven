@@ -5,7 +5,7 @@ describe SlackUtils::SingletonClient do
     it 'can not call' do
       expect {
         SlackUtils::SingletonClient.new
-      }.to raise_error
+      }.to raise_error(NoMethodError)
     end
   end
 

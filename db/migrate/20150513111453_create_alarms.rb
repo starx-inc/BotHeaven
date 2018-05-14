@@ -1,4 +1,4 @@
-class CreateAlarms < ActiveRecord::Migration
+class CreateAlarms < ActiveRecord::Migration[4.2]
   def change
     create_table :alarms do |t|
       t.string :name,               :limit => 32

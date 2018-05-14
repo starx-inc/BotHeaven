@@ -60,7 +60,7 @@ RSpec.describe BotsController, type: :controller do
 
   describe "GET #show" do
     subject do
-      get :show, id: bot.to_param
+      get :show, params: {id: bot.to_param}
       response
     end
 
@@ -81,7 +81,7 @@ RSpec.describe BotsController, type: :controller do
 
   describe "GET #show_storage" do
     subject do
-      get :show_storage, id: bot.to_param
+      get :show_storage, params: {id: bot.to_param}
       response
     end
 
@@ -102,7 +102,7 @@ RSpec.describe BotsController, type: :controller do
 
   describe "GET #hook" do
     subject do
-      get :hook, id: bot.to_param
+      get :hook, params: {id: bot.to_param}
       response
     end
 
@@ -118,7 +118,7 @@ RSpec.describe BotsController, type: :controller do
 
   describe "POST #hook" do
     subject do
-      post :hook, id: bot.to_param
+      post :hook, params: {id: bot.to_param}
       response
     end
 
@@ -134,7 +134,7 @@ RSpec.describe BotsController, type: :controller do
 
   describe "GET #edit" do
     subject do
-      get :edit, id: bot.to_param
+      get :edit, params: {id: bot.to_param}
       response
     end
 
@@ -157,7 +157,7 @@ RSpec.describe BotsController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       subject do
-        post :create, {:bot => valid_attributes}
+        post :create, params: {bot: valid_attributes}
       end
 
       it "creates a new Bot" do
@@ -195,7 +195,7 @@ RSpec.describe BotsController, type: :controller do
 
     context "with invalid params" do
       subject do
-        post :create, {:bot => invalid_attributes}
+        post :create, params: {bot: invalid_attributes}
       end
 
       it "assigns a newly created but unsaved bot as @bot" do
@@ -217,7 +217,7 @@ RSpec.describe BotsController, type: :controller do
       }
 
       subject do
-        put :update, {:id => bot.to_param, :bot => new_attributes}
+        put :update, params: {id: bot.to_param, bot: new_attributes}
       end
 
       it "updates the requested bot" do
@@ -267,12 +267,12 @@ RSpec.describe BotsController, type: :controller do
 
     context "with invalid params" do
       it "assigns the bot as @bot" do
-        put :update, {:id => bot.to_param, :bot => invalid_attributes}
+        put :update, params: {id: bot.to_param, bot: invalid_attributes}
         expect(assigns(:bot)).to eq(bot)
       end
 
       it "re-renders the 'edit' template" do
-        put :update, {:id => bot.to_param, :bot => invalid_attributes}
+        put :update, params: {id: bot.to_param, bot: invalid_attributes}
         expect(response).to render_template("edit")
       end
     end
@@ -281,12 +281,12 @@ RSpec.describe BotsController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested bot" do
       expect {
-        delete :destroy, {:id => bot.to_param}
+        delete :destroy, params: {id: bot.to_param}
       }.to change(Bot, :count).by(-1)
     end
 
     it "redirects to the bots list" do
-      delete :destroy, {:id => bot.to_param}
+      delete :destroy, params: {id: bot.to_param}
       expect(response).to redirect_to(bots_url)
     end
 
@@ -296,7 +296,7 @@ RSpec.describe BotsController, type: :controller do
       end
 
       it 'Redirect to root' do
-        expect(delete :destroy, {:id => bot.to_param}).to redirect_to(root_path)
+        expect(delete :destroy, params: {id: bot.to_param}).to redirect_to(root_path)
       end
     end
   end
