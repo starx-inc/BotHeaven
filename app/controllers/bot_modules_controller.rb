@@ -62,7 +62,7 @@ class BotModulesController < ApplicationController
       when 'show'
         redirect_to root_path unless @bot_module.readable?(current_user)
       when 'edit', 'update', 'destroy'
-        redirect_to root_path unless @bot_module.owner?(current_user)
+        redirect_to root_path unless @bot_module.editable?(current_user)
       else
         raise "Unknown action #{action_name}"
     end

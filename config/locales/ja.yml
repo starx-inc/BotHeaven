@@ -42,6 +42,7 @@ ja:
     permissions:
       private_module: '非公開モジュール'
       public_module:  '公開モジュール'
+      freedom_module: '改変可能モジュール'
   commons:
     sentences:
       create: '%{model}を作成'
