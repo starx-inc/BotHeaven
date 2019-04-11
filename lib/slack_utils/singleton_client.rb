@@ -77,7 +77,7 @@ module SlackUtils
     # @param [String] icon_emoji Emoji of user.
     # @param [String] text       Message text.
     def send_message(channel_id, name, icon_emoji, text)
-      client.chat_postMessage(username: name, channel: channel_id, text: text, icon_emoji: ":#{icon_emoji}:".squeeze(':'), unfurl_links: true)
+      client.chat_postMessage(username: name, channel: channel_id, text: text, icon_emoji: ":#{icon_emoji}:".squeeze(':'), unfurl_links: true, unfurl_media: true)
     end
 
     # Send message to channel.
@@ -86,7 +86,7 @@ module SlackUtils
     # @param [String] icon_url   Emoji of user.
     # @param [String] text       Message text.
     def send_message_iconurl(channel_id, name, icon_url, text)
-      client.chat_postMessage(username: name, channel: channel_id, text: text, icon_url: icon_url, unfurl_links: true)
+      client.chat_postMessage(username: name, channel: channel_id, text: text, icon_url: icon_url, unfurl_links: true, unfurl_media: true)
     end
 
     private
