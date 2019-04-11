@@ -243,7 +243,7 @@ api.setting.user
 Code
 ```javascript
 function onHook(method, params) {
-  slack.api.talk(params['message'])
+  api.slack.talk(params['message'])
 }
 ```
 
