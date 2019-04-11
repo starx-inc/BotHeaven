@@ -1,4 +1,4 @@
-FROM ruby:2.4.0
+FROM ruby:2.5.1
 ENV LANG C.UTF-8
 
 RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
