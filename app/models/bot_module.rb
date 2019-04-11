@@ -22,6 +22,7 @@ class BotModule < ApplicationRecord
   }
   scope :public_modules, -> {
     where(permission: BotModules::Permissions::PUBLIC_MODULE.to_i)
+    .or(where(permission: BotModules::Permissions::FREEDOM_MODULE.to_i))
   }
   scope :usable, -> (bot) {
     belongings(bot.user_id).or(public_modules)
@@ -31,11 +32,7 @@ class BotModule < ApplicationRecord
   # @param [User] user
   # @return [Boolean] true if user is owner.
   def owner?(user)
-    if user
-      self.user_id == user.id
-    else
-      false
-    end
+    user && user.id == self.user_id
   end
 
   # Check if has permission for read.
@@ -44,11 +41,12 @@ class BotModule < ApplicationRecord
   def readable?(user)
     owner?(user) || permission != BotModules::Permissions::PRIVATE_MODULE
   end
+  alias_method :usable?, :readable?
 
-  # Check if usable Module
+  # Check if has permission for edit.
   # @param [User] user User
-  # @return [Boolean] true if module is usable.
-  def usable?(user)
-    owner?(user) || permission == BotModules::Permissions::PUBLIC_MODULE
+  # @return [Boolean] true if user has permission.
+  def editable?(user)
+    owner?(user) || permission == BotModules::Permissions::FREEDOM_MODULE
   end
 end

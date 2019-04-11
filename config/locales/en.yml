@@ -42,6 +42,7 @@ en:
     permissions:
       private_module: 'Private Module'
       public_module:  'Publid Module'
+      freedom_module: 'Freedom Module'
   commons:
     sentences:
       create: 'Create %{model}'

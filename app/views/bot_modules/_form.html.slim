@@ -14,7 +14,7 @@
     = f.text_field :description
   .field
     = f.label :permission
-    = f.select :permission, BotModules::Permissions.form_items, selected: @bot_module.permission.to_i
+    = f.select :permission, BotModules::Permissions.form_items, selected: @bot_module.permission.to_s
   .field
     = f.label :script
     .editor.js-editor
