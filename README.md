@@ -53,7 +53,12 @@ bundle install --path vendor/bundle
 bundle exec rake db:migrate RAILS_ENV=production
 ```
 
-### 5. Run
+### 5. Precompile Assets.
+```shell
+bundle exec rake assets:precompile
+```
+
+### 6. Run
 ```shell
 bundle exec rails s -e production
 ```
@@ -154,6 +159,18 @@ api.slack.talk_with_icon(message, icon_emoji)
 
 // Example
 api.slack.talk_with_icon("Hello!", "tofu_on_fire")
+```
+
+> Talk with icon url
+
+```javascript
+// Talk with icon url
+// @param [String] message    Message
+// @param [String] icon_url   Icon.
+api.slack.talk_with_icon_url(message, icon_url)
+
+// Example
+api.slack.talk_with_icon_url("Hello!", "http://icon_url")
 ```
 
 ### Storage API

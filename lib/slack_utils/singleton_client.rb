@@ -80,6 +80,15 @@ module SlackUtils
       client.chat_postMessage(username: name, channel: channel_id, text: text, icon_emoji: ":#{icon_emoji}:".squeeze(':'))
     end
 
+    # Send message to channel.
+    # @param [String] channel_id ID of channel.
+    # @param [String] name       Name of user.
+    # @param [String] icon_url   Emoji of user.
+    # @param [String] text       Message text.
+    def send_message_iconurl(channel_id, name, icon_url, text)
+      client.chat_postMessage(username: name, channel: channel_id, text: text, icon_url: icon_url)
+    end
+
     private
     # Get slack client.
     # @return [Slack::Client] client.

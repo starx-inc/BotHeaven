@@ -65,4 +65,19 @@ RSpec.describe Bots::Apis::Slack do
       expect(subject).to eq(true.to_s)
     end
   end
+
+  describe '#talk_with_icon_url' do
+    let :script do
+      'function test() { return api.slack.talk_with_icon_url("year!", "http://hoge/"); }'
+    end
+
+    it 'Enqueue SlackTalkIconUrlJob.' do
+      expect(JobDaemon).to receive(:enqueue).once
+      subject
+    end
+
+    it 'Return true' do
+      expect(subject).to eq(true.to_s)
+    end
+  end
 end

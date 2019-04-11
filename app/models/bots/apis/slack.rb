@@ -34,5 +34,23 @@ module Bots::Apis
     rescue
       false
     end
+
+    # Talk with icon url
+    # @param [String] message     message.
+    # @param [String] icon_url icon url.
+    # @return [Boolean] true if success.
+    def talk_with_icon_url(message, icon_url)
+      JobDaemon.enqueue(
+        JobDaemons::SlackTalkIconUrlJob.new(
+          @bot.channel_id.to_s,
+          @bot.name.to_s,
+          icon_url,
+          message.to_s
+        )
+      )
+      true
+    rescue
+      false
+    end
   end
 end
