@@ -17,7 +17,7 @@
     tbody
       - @bot_modules.each do |bot_module|
         - next if bot_module.permission == BotModules::Permissions::PRIVATE_MODULE && !bot_module.owner?(@current_user)
-        - editable = bot_module.owner?(@current_user)
+        - editable = bot_module.owner?(@current_user) || bot_module.permission == BotModules::Permissions::FREEDOM_MODULE
         - deletable = bot_module.owner?(@current_user)
         tr
           td = bot_module.name
