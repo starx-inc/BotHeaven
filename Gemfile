@@ -49,8 +49,6 @@ gem 'puma'
 # Environment
 gem 'dotenv-rails'
 
-gem 'sqlite3', group: "sqlite3"
-
 group :production do
   gem 'pg'
   # gem 'rails_12factor'
@@ -72,6 +70,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   gem 'coveralls'
+  gem 'sqlite3'
 end
 
 group :test do
